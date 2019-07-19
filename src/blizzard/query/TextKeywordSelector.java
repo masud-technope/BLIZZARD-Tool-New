@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import coderank.query.expansion.CodeRankQueryExpansionProvider;
+
+import acer.coderank.query.expansion.ACERQueryProviderMinimal;
 import blizzard.config.StaticData;
 import blizzard.lucenecheck.LuceneSearcher;
 import blizzard.text.normalizer.TextNormalizer;
@@ -15,7 +16,6 @@ import token.manager.TokenTracebackManager;
 import blizzard.utility.ContentLoader;
 import blizzard.utility.ItemSorter;
 import blizzard.utility.MiscUtility;
-import core.SearchTermProvider;
 
 public class TextKeywordSelector {
 
@@ -23,11 +23,10 @@ public class TextKeywordSelector {
 	String bugDesc;
 	int TOPK;
 	String repoName;
-	HashMap<String, ArrayList<String>> adjacentMapBR;
-	HashMap<String, ArrayList<String>> adjacentMapSRC;
 
-	public TextKeywordSelector(String repoName, String title, String bugDesc, int TOPK, boolean otherMethod) {
-		this.repoName=repoName;
+	public TextKeywordSelector(String repoName, String title, String bugDesc,
+			int TOPK, boolean otherMethod) {
+		this.repoName = repoName;
 		this.title = title;
 		this.bugDesc = bugDesc;
 		this.TOPK = TOPK;
@@ -39,17 +38,6 @@ public class TextKeywordSelector {
 		this.title = title;
 		this.bugDesc = bugDesc;
 		this.TOPK = TOPK;
-	}
-
-	public TextKeywordSelector(String repoName, String title, String bugDesc,
-			int TOPK, HashMap<String, ArrayList<String>> adjacentMapBR,
-			HashMap<String, ArrayList<String>> adjacentMapSRC) {
-		this.repoName = repoName;
-		this.title = title;
-		this.bugDesc = bugDesc;
-		this.TOPK = TOPK;
-		this.adjacentMapBR = adjacentMapBR;
-		this.adjacentMapSRC = adjacentMapSRC;
 	}
 
 	@Deprecated
@@ -103,40 +91,19 @@ public class TextKeywordSelector {
 		return refined;
 	}
 
-	public ArrayList<String> getSearchTerms() {
-		SearchTermProvider keywordProvider = new SearchTermProvider(this.title,
-				this.bugDesc, TOPK, false);
-		String termStr = keywordProvider.provideSearchTerms();
-		ArrayList<String> searchTerms = MiscUtility.str2List(termStr);
-		ArrayList<String> keywords = new ArrayList<>();
-		for (String sterm : searchTerms) {
-			if (sterm.length() >= 3) {
-				sterm = sterm.toLowerCase();
-				keywords.add(sterm);
-				if (keywords.size() == TOPK) {
-					break;
-				}
-			}
-		}
-		return keywords;
-	}
-
 	public String getSearchTermsWithCR(int expansionSize) {
-		
-		String indexFolder = StaticData.HOME_DIR + "/Lucene-Index/"
-				+ repoName;
-		String corpusFolder = StaticData.HOME_DIR + "/Corpus/" + repoName;
-		
-		String normDesc=new TextNormalizer(this.bugDesc).normalizeText();
-		
-		//title  as the search query produced the best result
-		CodeRankQueryExpansionProvider expander=new 
-				CodeRankQueryExpansionProvider(repoName, 0, this.title, indexFolder, corpusFolder);
 
-		String  sourceTerms=expander.getCRExtension(expansionSize);
-		
-		return  normDesc+"\t"+sourceTerms;
-		
+		String indexFolder = StaticData.HOME_DIR + "/Lucene-Index/" + repoName;
+		String corpusFolder = StaticData.HOME_DIR + "/Corpus/" + repoName;
+		String baselineQuery = new TextNormalizer(this.title).normalizeText();
+		String normDesc = new TextNormalizer(this.bugDesc).normalizeText();
+
+		ACERQueryProviderMinimal acer = new ACERQueryProviderMinimal(repoName,
+				0, baselineQuery, indexFolder, corpusFolder, null);
+		String sourceTerms = acer.getExtendedQuery(expansionSize);
+
+		return normDesc + "\t" + sourceTerms;
+
 	}
 
 	protected ArrayList<String> getMiniCorpus(ArrayList<String> results) {
@@ -166,56 +133,6 @@ public class TextKeywordSelector {
 		}
 		return candidates;
 	}
-
-	public ArrayList<String> getSearchTermsWithRF() {
-		SearchTermProvider keywordProvider = new SearchTermProvider(this.title,
-				this.bugDesc, TOPK, false);
-		String termStr = keywordProvider.provideSearchTerms();
-		ArrayList<String> candidates = getTopK(termStr, 10);
-		LuceneSearcher searcher = new LuceneSearcher(0, repoName,
-				MiscUtility.list2Str(candidates));
-		ArrayList<String> results = searcher.performVSMSearchList(false);
-		ArrayList<String> corpusLines = getMiniCorpus(results);
-
-		/*
-		 * SearchTermProvider sProvider = new SearchTermProvider(termStr,
-		 * MiscUtility.list2Str(corpusLines), TOPK, true); String extended =
-		 * sProvider.provideSearchTerms();
-		 */
-
-		HashMap<String, Integer> masterMap = new HashMap<>();
-		for (String cline : corpusLines) {
-			HashMap<String, Integer> wordmap = MiscUtility.wordcount(cline);
-			for (String key : wordmap.keySet()) {
-				if (masterMap.containsKey(key)) {
-					int count = wordmap.get(key) + masterMap.get(key);
-					masterMap.put(key, count);
-				} else {
-					masterMap.put(key, wordmap.get(key));
-				}
-			}
-		}
-
-		ArrayList<String> extension = new ArrayList<String>();
-		List<Map.Entry<String, Integer>> sorted = ItemSorter
-				.sortHashMapInt(masterMap);
-		for (Map.Entry<String, Integer> entry : sorted) {
-			String sterm = entry.getKey();
-			if (sterm.length() >= 3) {
-				sterm = sterm.toLowerCase();
-				extension.add(sterm);
-				if (extension.size() == TOPK) {
-					break;
-				}
-			}
-		}
-
-		// add the initial keywords
-		// candidates.addAll(extension);
-		return extension;
-		// candidates;
-	}
-
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

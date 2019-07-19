@@ -9,6 +9,7 @@ import blizzard.bug.report.classification.BugReportClassifier;
 import blizzard.bug.report.classification.ExceptionExtractor;
 import blizzard.bug.report.classification.TraceLoader;
 import blizzard.config.StaticData;
+import blizzard.text.normalizer.TextNormalizer;
 import blizzard.utility.ContentLoader;
 import blizzard.utility.ItemSorter;
 import blizzard.utility.MiscUtility;
@@ -42,6 +43,7 @@ public class BLIZZARDQueryProvider {
 		// System.out.println(title);
 		ArrayList<String> blizzardKeywords = new ArrayList<>();
 		System.out.println("Report group: "+reportGroup);
+		
 		switch (reportGroup) {
 		case "ST":
 			ArrayList<String> traces = TraceLoader.loadStackTraces(repoName, bugID);
@@ -50,12 +52,11 @@ public class BLIZZARDQueryProvider {
 			HashSet<String> exceptions = ExceptionExtractor.getExceptionMessages(this.reportContent);
 
 			// adding the title
-			/*
-			 * if (!bugReportTitle.isEmpty()) { String normTitle = new
-			 * TextNormalizer(bugReportTitle) .normalizeSimple();
-			 * blizzardKeywords.add(normTitle); }
-			 */
-
+			if (!bugReportTitle.isEmpty()) {
+				String normTitle = new TextNormalizer(bugReportTitle).normalizeSimple();
+				blizzardKeywords.add(normTitle);
+			}
+			
 			// adding the exception
 			if (!exceptions.isEmpty()) {
 				hasException = true;
@@ -64,8 +65,8 @@ public class BLIZZARDQueryProvider {
 
 			// adding the trace keywords
 			blizzardKeywords.addAll(salientItems);
-
 			break;
+			
 		case "NL":
 			// invoke ACER (basic version without ML)
 			TextKeywordSelector kwSelector = new TextKeywordSelector(repoName,
@@ -74,14 +75,17 @@ public class BLIZZARDQueryProvider {
 			String extended = kwSelector
 					.getSearchTermsWithCR(StaticData.MAX_NL_SUGGESTED_QUERY_LEN);
 			salientItems = MiscUtility.str2List(extended);
+			blizzardKeywords.addAll(salientItems);
 			break;
-			
+
 		case "PE":
 			// invoke STRICT (basic version without ML)
 			PEKeywordSelector peSelector = new PEKeywordSelector(bugReportTitle, reportContent,
 					StaticData.MAX_PE_SUGGESTED_QUERY_LEN);
 			salientItems = peSelector.getSearchTerms();
+			blizzardKeywords.addAll(salientItems);
 			break;
+			
 		default:
 			break;
 		}
@@ -118,14 +122,13 @@ public class BLIZZARDQueryProvider {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String repoName = "eclipse.jdt.debug";
-		int bugID = 105573;
-		String title = "Bug 105573 – suspend at uncaught exception shows compiler warning";
+		String repoName = "eclipse.jdt.ui";
+		int bugID = 187316;
+		String title = "Bug 187316 – [preferences] Mark Occurences Pref Page; Link to";
 		String brFile = StaticData.HOME_DIR + "/BR-Raw/" + repoName + "/" + bugID + ".txt";
 		String bugReportContent = ContentLoader.loadFileContent(brFile);
 
 		BLIZZARDQueryProvider blizzardProvider = new BLIZZARDQueryProvider(repoName, bugID, title, bugReportContent);
 		System.out.println(blizzardProvider.provideBLIZZARDQuery());
-
 	}
 }

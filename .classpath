@@ -20,9 +20,11 @@
 	<classpathentry kind="lib" path="blizzard.lib/lucene-core-6.2.0.jar"/>
 	<classpathentry kind="lib" path="blizzard.lib/lucene-queries-6.2.0.jar"/>
 	<classpathentry kind="lib" path="blizzard.lib/lucene-queryparser-6.2.0.jar"/>
-	<classpathentry kind="lib" path="blizzard.lib/ca.usask.cs.srlab.strict.jar"/>
 	<classpathentry kind="lib" path="blizzard.lib/junit-4.10.jar"/>
 	<classpathentry kind="lib" path="blizzard.lib/slf4j-api-1.7.17.jar"/>
 	<classpathentry kind="lib" path="blizzard.lib/stanford-postagger-3.6.0.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/ca.usask.cs.srlab.strict-qrmodule.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/ca.usask.cs.srlab.acer-qrmodule.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/ca.usask.cs.srlab.query-difficulty.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
