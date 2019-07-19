@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="blizzard.lib/ca.usask.cs.srlab.pagerank.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/commons-math3-3.6.1.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/ejml-0.23.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/javaparser-core-2.3.0.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/jgraph-5.13.0.0.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/jgrapht-core-0.9.0.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/jgrapht-ext-0.9.0.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/jgraphx-2.0.0.1.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/jsoup-1.7.2.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/samurai.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/stemmer-traceback.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/xom.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/lucene-analyzers-common-6.2.0.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/lucene-codecs-6.2.0.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/lucene-core-6.2.0.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/lucene-queries-6.2.0.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/lucene-queryparser-6.2.0.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/ca.usask.cs.srlab.strict.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/slf4j-api-1.7.17.jar"/>
+	<classpathentry kind="lib" path="blizzard.lib/stanford-postagger-3.6.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
