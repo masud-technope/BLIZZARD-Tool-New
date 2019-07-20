@@ -14,13 +14,11 @@ public class ClassResultRankMgr {
 	public static HashMap<String, String> keyMap = new HashMap<>();
 	String keyfile;
 
-	public ClassResultRankMgr(String repoName, ArrayList<String> results,
-			ArrayList<String> goldset) {
+	public ClassResultRankMgr(String repoName, ArrayList<String> results, ArrayList<String> goldset) {
 		this.repoName = repoName;
 		this.results = results;
 		this.goldset = goldset;
-		this.keyfile = StaticData.HOME_DIR + "/Lucene-Index2File-Mapping/" + this.repoName
-				+ ".ckeys";
+		this.keyfile = StaticData.CORPUS_INDEX_KEY_MAPPING + "/" + this.repoName + ".ckeys";
 		if (keyMap.isEmpty()) {
 			// load only the HashMap is empty
 			loadKeys();
@@ -30,8 +28,7 @@ public class ClassResultRankMgr {
 
 	public void loadKeys() {
 		// loading file name keys
-		ArrayList<String> lines = ContentLoader
-				.getAllLinesOptList(this.keyfile);
+		ArrayList<String> lines = ContentLoader.getAllLinesOptList(this.keyfile);
 		for (String line : lines) {
 			String[] parts = line.split(":");
 			String key = parts[0] + ".java";

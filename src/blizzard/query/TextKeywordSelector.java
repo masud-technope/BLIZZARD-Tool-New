@@ -1,20 +1,13 @@
 package blizzard.query;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
 import acer.coderank.query.expansion.ACERQueryProviderMinimal;
 import blizzard.config.StaticData;
-import blizzard.lucenecheck.LuceneSearcher;
 import blizzard.text.normalizer.TextNormalizer;
 import samurai.splitter.SamuraiSplitter;
 import token.manager.TokenTracebackManager;
-import blizzard.utility.ContentLoader;
-import blizzard.utility.ItemSorter;
 import blizzard.utility.MiscUtility;
 
 public class TextKeywordSelector {
@@ -24,20 +17,30 @@ public class TextKeywordSelector {
 	int TOPK;
 	String repoName;
 
-	public TextKeywordSelector(String repoName, String title, String bugDesc,
-			int TOPK, boolean otherMethod) {
+	public TextKeywordSelector(String repoName, String title, String bugDesc, int TOPK, boolean otherMethod) {
 		this.repoName = repoName;
 		this.title = title;
 		this.bugDesc = bugDesc;
 		this.TOPK = TOPK;
 	}
 
-	public TextKeywordSelector(String repoName, String title, String bugDesc,
-			int TOPK) {
+	public TextKeywordSelector(String repoName, String title, String bugDesc, int TOPK) {
 		this.repoName = repoName;
 		this.title = title;
 		this.bugDesc = bugDesc;
 		this.TOPK = TOPK;
+		this.loadACERConfigs();
+	}
+
+	protected void loadACERConfigs() {
+		// loading the required variables for the strict
+		System.setProperty("HOME_DIR", StaticData.HOME_DIR);
+		System.setProperty("STOPWORD_DIR", "/data");
+		System.setProperty("SAMURAI_DIR", "/tbdata");
+		System.setProperty("MAX_ENT_MODELS_DIR", "/models");
+		System.setProperty("REPOSITORY_SRC_DIRECTORY", "/Corpus");
+		System.setProperty("CORPUS_DIR", "/Corpus");
+		System.setProperty("INDEX_DIR", "/Lucene-Index");
 	}
 
 	@Deprecated
@@ -93,30 +96,18 @@ public class TextKeywordSelector {
 
 	public String getSearchTermsWithCR(int expansionSize) {
 
-		String indexFolder = StaticData.HOME_DIR + "/Lucene-Index/" + repoName;
-		String corpusFolder = StaticData.HOME_DIR + "/Corpus/" + repoName;
+		String indexFolder = StaticData.INDEX_DIR + "/" + repoName;
+		String corpusFolder = StaticData.CORPUS_DIR + "/" + repoName;
+		
 		String baselineQuery = new TextNormalizer(this.title).normalizeText();
 		String normDesc = new TextNormalizer(this.bugDesc).normalizeText();
 
-		ACERQueryProviderMinimal acer = new ACERQueryProviderMinimal(repoName,
-				0, baselineQuery, indexFolder, corpusFolder, null);
+		ACERQueryProviderMinimal acer = new ACERQueryProviderMinimal(repoName, 0, baselineQuery, indexFolder,
+				corpusFolder, null);
 		String sourceTerms = acer.getExtendedQuery(expansionSize);
 
-		return normDesc + "\t" + sourceTerms;
+		return  sourceTerms+"\t"+normDesc;
 
-	}
-
-	protected ArrayList<String> getMiniCorpus(ArrayList<String> results) {
-		ArrayList<String> corpusLines = new ArrayList<>();
-		for (String fileURL : results) {
-			String fileName = new File(fileURL).getName();
-			String srcURL = StaticData.HOME_DIR + "/corpus/norm-class/"
-					+ repoName + "/" + fileName;
-			String srcContent = ContentLoader.loadFileContent(srcURL);
-			// ArrayLis<String> lines=ContentLoader.getAllLinesOptList(srcURL);
-			corpusLines.add(srcContent);
-		}
-		return corpusLines;
 	}
 
 	protected ArrayList<String> getTopK(String itemStr, int TopK) {

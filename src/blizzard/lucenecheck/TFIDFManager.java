@@ -33,9 +33,9 @@ public class TFIDFManager {
 	public TFIDFManager(String repoName, boolean stem) {
 		this.stem = stem;
 		if (stem) {
-			this.indexFolder = StaticData.HOME_DIR + "/Lucene-Index/" + repoName;
+			this.indexFolder = StaticData.INDEX_DIR + "/" + repoName;
 		} else {
-			this.indexFolder = StaticData.HOME_DIR + "/Lucene-Index/" + repoName;
+			this.indexFolder = StaticData.INDEX_DIR + "/" + repoName;
 		}
 		this.repoName = repoName;
 		this.keys = new HashSet<>();

@@ -10,6 +10,7 @@ import blizzard.bug.report.classification.ExceptionExtractor;
 import blizzard.bug.report.classification.TraceLoader;
 import blizzard.config.StaticData;
 import blizzard.text.normalizer.TextNormalizer;
+import blizzard.utility.BugReportLoader;
 import blizzard.utility.ContentLoader;
 import blizzard.utility.ItemSorter;
 import blizzard.utility.MiscUtility;
@@ -42,8 +43,8 @@ public class BLIZZARDQueryProvider {
 
 		// System.out.println(title);
 		ArrayList<String> blizzardKeywords = new ArrayList<>();
-		System.out.println("Report group: "+reportGroup);
-		
+		System.out.println("Report group : " + reportGroup);
+
 		switch (reportGroup) {
 		case "ST":
 			ArrayList<String> traces = TraceLoader.loadStackTraces(repoName, bugID);
@@ -56,7 +57,7 @@ public class BLIZZARDQueryProvider {
 				String normTitle = new TextNormalizer(bugReportTitle).normalizeSimple();
 				blizzardKeywords.add(normTitle);
 			}
-			
+
 			// adding the exception
 			if (!exceptions.isEmpty()) {
 				hasException = true;
@@ -66,14 +67,12 @@ public class BLIZZARDQueryProvider {
 			// adding the trace keywords
 			blizzardKeywords.addAll(salientItems);
 			break;
-			
+
 		case "NL":
 			// invoke ACER (basic version without ML)
-			TextKeywordSelector kwSelector = new TextKeywordSelector(repoName,
-					bugReportTitle, reportContent,
+			TextKeywordSelector kwSelector = new TextKeywordSelector(repoName, bugReportTitle, reportContent,
 					StaticData.MAX_NL_SUGGESTED_QUERY_LEN);
-			String extended = kwSelector
-					.getSearchTermsWithCR(StaticData.MAX_NL_SUGGESTED_QUERY_LEN);
+			String extended = kwSelector.getSearchTermsWithCR(StaticData.MAX_NL_SUGGESTED_QUERY_LEN);
 			salientItems = MiscUtility.str2List(extended);
 			blizzardKeywords.addAll(salientItems);
 			break;
@@ -85,7 +84,7 @@ public class BLIZZARDQueryProvider {
 			salientItems = peSelector.getSearchTerms();
 			blizzardKeywords.addAll(salientItems);
 			break;
-			
+
 		default:
 			break;
 		}
@@ -124,8 +123,8 @@ public class BLIZZARDQueryProvider {
 		// TODO Auto-generated method stub
 		String repoName = "eclipse.jdt.ui";
 		int bugID = 187316;
-		String title = "Bug 187316 – [preferences] Mark Occurences Pref Page; Link to";
 		String brFile = StaticData.HOME_DIR + "/BR-Raw/" + repoName + "/" + bugID + ".txt";
+		String title = BugReportLoader.loadBRTitle(repoName, bugID);
 		String bugReportContent = ContentLoader.loadFileContent(brFile);
 
 		BLIZZARDQueryProvider blizzardProvider = new BLIZZARDQueryProvider(repoName, bugID, title, bugReportContent);

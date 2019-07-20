@@ -21,16 +21,15 @@ public class PEKeywordSelector {
 	}
 
 	protected void loadSTRICTConfigs() {
-		// loading the required modules for the strict
-		strict.ca.usask.cs.srlab.strict.config.StaticData strictConfig = new strict.ca.usask.cs.srlab.strict.config.StaticData();
-		strictConfig.HOME_DIR = StaticData.HOME_DIR;
-		strictConfig.STOPWORD_DIR = StaticData.STOPWORD_DIR;
-		strictConfig.MAX_ENT_MODELS_DIR = StaticData.HOME_DIR + "/models";
+		// loading the required variables for the strict library
+		System.setProperty("HOME_DIR", StaticData.HOME_DIR);
+		System.setProperty("STOPWORD_DIR", "/data");
+		System.setProperty("SAMURAI_DIR", "/tbdata");
+		System.setProperty("MAX_ENT_MODELS_DIR", "/models");
 	}
 
 	public ArrayList<String> getSearchTerms() {
-		SearchTermProvider keywordProvider = new SearchTermProvider("", 0,
-				this.title, this.bugReportContent);
+		SearchTermProvider keywordProvider = new SearchTermProvider("", 0, this.title, this.bugReportContent);
 		String termStr = keywordProvider.provideSearchQuery("TPR");
 		ArrayList<String> searchTerms = MiscUtility.str2List(termStr);
 		ArrayList<String> keywords = new ArrayList<>();
@@ -51,10 +50,8 @@ public class PEKeywordSelector {
 		String repoName = "eclipse.jdt.core";
 		int bugID = 15036;
 		String title = "Bug 15036  ASTVisitor.preVisit and ASTVisitor.postVisit not called correctly";
-		String bugReportContent = BugReportLoader
-				.loadBugReport(repoName, bugID);
-		PEKeywordSelector peSelector = new PEKeywordSelector(title,
-				bugReportContent, 30);
+		String bugReportContent = BugReportLoader.loadBugReport(repoName, bugID);
+		PEKeywordSelector peSelector = new PEKeywordSelector(title, bugReportContent, 30);
 		System.out.println(peSelector.getSearchTerms());
 	}
 }

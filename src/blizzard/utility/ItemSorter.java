@@ -26,17 +26,6 @@ public class ItemSorter {
 			}
 		});
 
-		// JAVA7 code...
-		/*
-		 * Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
-		 * 
-		 * @Override public int compare(Entry<String, Integer> o1, Entry<String,
-		 * Integer> o2) {
-		 * 
-		 * // TODO Auto-generated method stub Integer v2 = o2.getValue();
-		 * Integer v1 = o1.getValue(); return v2.compareTo(v1); } });
-		 */
-
 		// returning the sorted list
 		return list;
 	}

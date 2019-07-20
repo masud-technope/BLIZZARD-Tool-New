@@ -2,10 +2,13 @@ package blizzard.config;
 
 public class StaticData {
 
-	public static String HOME_DIR = "F:/MyWorks/Thesis Works/Crowdsource_Knowledge_Base/M4CPBugs/experiment/replication-data-FSE2018";
+	public static String HOME_DIR = "C:\\MyWorks\\ESEC-FSE-2018\\Replication-package";
 	public static String STACK_TRACE_DIR = HOME_DIR + "/BR-ST-StackTraces";
 	public static String STOPWORD_DIR = HOME_DIR + "/data";
-	
+	public static String CORPUS_INDEX_KEY_MAPPING = HOME_DIR + "/Lucene-Index2File-Mapping";
+	public static String INDEX_DIR = HOME_DIR + "/Lucene-Index";
+	public static String CORPUS_DIR = HOME_DIR + "/Corpus";
+	public static String GOLDSET_DIR = HOME_DIR + "/Goldset";
 
 	public static double SIGNIFICANCE_THRESHOLD = 0.001;
 	public static int DOI_TOPK_THRESHOLD = 5;

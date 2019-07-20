@@ -47,7 +47,7 @@ public class LuceneSearcher {
 		this.bugID = bugID;
 		this.repository = repository;
 		// checking the class-based index
-		this.indexFolder = StaticData.HOME_DIR + "/Lucene-Index/"
+		this.indexFolder = StaticData.INDEX_DIR + "/"
 				+ repository;
 		this.searchQuery = searchQuery;
 		this.results = new ArrayList<>();
@@ -116,7 +116,7 @@ public class LuceneSearcher {
 	protected boolean getGoldSet() {
 		// collecting gold set results
 		boolean gsfound = true;
-		String goldFile = StaticData.HOME_DIR + "/Goldset/" + repository
+		String goldFile = StaticData.GOLDSET_DIR + "/" + repository
 				+ "/" + bugID + ".txt";
 		// clear the old values
 		if (!this.goldset.isEmpty())
@@ -140,7 +140,7 @@ public class LuceneSearcher {
 	protected boolean getGoldSetSVN() {
 		// collecting gold set from SVN
 		boolean gsfound = true;
-		String goldFile = StaticData.HOME_DIR + "/Goldset/" + repository
+		String goldFile = StaticData.GOLDSET_DIR + "/" + repository
 				+ "/" + bugID + ".txt";
 
 		File f = new File(goldFile);
@@ -159,20 +159,6 @@ public class LuceneSearcher {
 			// System.out.println("Solution not listed");
 		}
 		return gsfound;
-	}
-
-	protected void showGoldSet() {
-		// showing the actual solutions
-		String goldFile = StaticData.HOME_DIR + "/goldset/" + repository
-				+ "/gold/" + bugID + ".txt";
-		File f = new File(goldFile);
-		if (f.exists()) { // if the solution file exists
-			String content = ContentLoader.loadFileContent(goldFile);
-			System.out.println("===========Gold solution===========");
-			System.out.println(content);
-		} else {
-			System.out.println("Solution not listed");
-		}
 	}
 
 	public ArrayList<Integer> getGoldFileIndicesClass() {

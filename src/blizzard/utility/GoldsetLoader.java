@@ -8,7 +8,7 @@ public class GoldsetLoader {
 	public static ArrayList<String> goldsetLoader(String repoName, int bugID) {
 		// loading the gold set for any repo and bug ID
 		ArrayList<String> goldset = new ArrayList<>();
-		String goldFile = StaticData.HOME_DIR + "/Goldset/" + repoName + "/" + bugID + ".txt";
+		String goldFile = StaticData.GOLDSET_DIR + "/" + repoName + "/" + bugID + ".txt";
 		File f = new File(goldFile);
 		if (f.exists()) { // if the solution file exists
 			String content = ContentLoader.loadFileContent(goldFile);

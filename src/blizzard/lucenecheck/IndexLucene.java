@@ -29,8 +29,8 @@ public class IndexLucene {
 
 	public IndexLucene(String repoName) {
 		// initialization
-		this.index = StaticData.HOME_DIR + "/Lucene-Index/" + repoName;
-		this.docs = StaticData.HOME_DIR + "/Corpus/" + repoName;
+		this.index = StaticData.INDEX_DIR + "/" + repoName;
+		this.docs = StaticData.CORPUS_DIR + "/" + repoName;
 		// this.makeIndexFolder(repoName);
 		System.out.println("Index:" + this.index);
 		System.out.println("Docs:" + this.docs);
