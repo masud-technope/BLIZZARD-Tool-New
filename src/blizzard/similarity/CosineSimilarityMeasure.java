@@ -273,15 +273,4 @@ public class CosineSimilarityMeasure {
 		}
 		return content;
 	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		String title1 = load_text_content("stack.txt");
-		String title2 = load_text_content("stack2.txt");
-		CosineSimilarityMeasure measure = new CosineSimilarityMeasure(title1,
-				title2);
-		double similarity = measure.get_cosine_similarity_score(true);
-		System.out.println("Similarity score:" + similarity);
-	}
-
 }

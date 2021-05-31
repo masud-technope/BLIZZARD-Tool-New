@@ -113,11 +113,5 @@ public class StopWordManager {
 		return refined;
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		StopWordManager manager = new StopWordManager();
-		String str = "statement protected java Boolean lang expression Quick Invert operator omits AdvancedQuickAssistProcessor";
-		// String modified=manager.removeSpecialChars(sentence);
-		System.out.println(manager.getRefinedSentence(str));
-	}
+	
 }

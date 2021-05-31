@@ -2,7 +2,7 @@ package blizzard.config;
 
 public class StaticData {
 
-	public static String HOME_DIR = "C:\\MyWorks\\ESEC-FSE-2018\\Replication-package";
+	public static String HOME_DIR = "C:\\MyWorks\\MyResearch\\BugLocalization\\BLIZZARD\\BLIZZARD-Replication-Package-ESEC-FSE2018";
 	public static String STACK_TRACE_DIR = HOME_DIR + "/BR-ST-StackTraces";
 	public static String STOPWORD_DIR = HOME_DIR + "/data";
 	public static String CORPUS_INDEX_KEY_MAPPING = HOME_DIR + "/Lucene-Index2File-Mapping";

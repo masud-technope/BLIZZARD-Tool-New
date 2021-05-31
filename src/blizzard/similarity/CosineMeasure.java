@@ -16,7 +16,7 @@ public class CosineMeasure {
 		return cosmeasure;
 	}
 
-	protected static double getMode(int[] list) {
+	public static double getMode(int[] list) {
 		double sum = 0;
 		for (int i : list) {
 			sum += i * i;
