@@ -410,5 +410,5 @@ public class Stemmer{
     return str;
     } //stripAffixes
 
-} //class
+}
 

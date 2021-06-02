@@ -11,7 +11,7 @@ public class TokenizerTest {
 		MyTokenizer tokenizer = new MyTokenizer(texts);
 		System.out.println(tokenizer.tokenize_text_item());
 	}
-
+	
 	@Test
 	public void testTokenizeCodeElements() {
 		String texts = "ArrayList List EmailAddress EmailClient";

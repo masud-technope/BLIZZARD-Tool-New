@@ -1,3 +1,6 @@
+
+/** Probably dead code, will be removed in the next version!**/
+
 package blizzard.similarity;
 
 public class Levensthein {
