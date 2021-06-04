@@ -13,7 +13,7 @@ public class TraceCollector {
 		this.traceFile = traceFile;
 	}
 
-	protected ArrayList<String> extractStackTraces(String bugReport) {
+	public ArrayList<String> extractStackTraces(String bugReport) {
 		// extract the stack traces from the bug report
 		ArrayList<String> traces = new ArrayList<>();
 		String stackRegex = "(.*)?(.+)\\.(.+)(\\((.+)\\.java:\\d+\\)|\\(Unknown Source\\)|\\(Native Method\\))";
@@ -39,7 +39,7 @@ public class TraceCollector {
 		return entry;
 	}
 
-	protected ArrayList<String> collectTraceEntries() {
+	public ArrayList<String> collectTraceEntries() {
 		String bugReport = ContentLoader.loadFileContent(this.traceFile);
 		ArrayList<String> traces = extractStackTraces(bugReport);
 		// MiscUtility.showList(traces);

@@ -1,10 +1,12 @@
 package blizzard.tests;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import java.util.HashSet;
 import org.junit.Test;
 import blizzard.bug.report.classification.ExceptionExtractor;
+import blizzard.bug.report.classification.TraceLoader;
 import blizzard.utility.BugReportLoader;
 
 public class ExceptionExtractorTest {
@@ -38,6 +40,7 @@ public class ExceptionExtractorTest {
 		}
 		assertFalse(hasMessage);
 	}
+	
 	
 
 }
