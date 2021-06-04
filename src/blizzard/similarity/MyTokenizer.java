@@ -14,7 +14,7 @@ public class MyTokenizer {
 	}
 
 	public ArrayList<String> tokenize_text_item() {
-		// tokenizing textual content
+		// tokenize textual content
 		StringTokenizer tokenizer = new StringTokenizer(this.itemToTokenize);
 		ArrayList<String> tokens = new ArrayList<String>();
 		while (tokenizer.hasMoreTokens()) {
