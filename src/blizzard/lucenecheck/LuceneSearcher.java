@@ -43,7 +43,6 @@ public class LuceneSearcher {
 	public double recrank = 0;
 
 	public LuceneSearcher(int bugID, String repository, String searchQuery) {
-		// initialization
 		this.bugID = bugID;
 		this.repository = repository;
 		// checking the class-based index
@@ -61,7 +60,6 @@ public class LuceneSearcher {
 	}
 
 	public ArrayList<String> performVSMSearchList(boolean all) {
-		// performing LUECNE search
 		boolean validcase = false;
 		try {
 			if (reader == null)
@@ -98,7 +96,6 @@ public class LuceneSearcher {
 						
 					}
 				}
-				// checking the gold set
 				try {
 					validcase = getGoldSet();
 				} catch (Exception exc) {
@@ -114,7 +111,6 @@ public class LuceneSearcher {
 	}
 
 	protected boolean getGoldSet() {
-		// collecting gold set results
 		boolean gsfound = true;
 		String goldFile = StaticData.GOLDSET_DIR + "/" + repository
 				+ "/" + bugID + ".txt";

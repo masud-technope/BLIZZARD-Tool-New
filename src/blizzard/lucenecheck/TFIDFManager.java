@@ -217,7 +217,6 @@ public class TFIDFManager {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		String repoName = "log4j";
 		String queryTerm = "warn";
 		boolean stem = false;
