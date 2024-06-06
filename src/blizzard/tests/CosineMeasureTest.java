@@ -25,7 +25,6 @@ public class CosineMeasureTest {
 	
 	@Test
 	public void testCosineSimilarityForTexts() {
-		// TODO Auto-generated method stub
 		String title1 = "This is a simple string, nothing serious!";
 		String title2 = "To be or not to be, that is the question!";
 		CosineSimilarityMeasure measure = new CosineSimilarityMeasure(title1,

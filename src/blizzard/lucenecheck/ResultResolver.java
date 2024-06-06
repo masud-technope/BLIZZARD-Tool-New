@@ -23,7 +23,6 @@ public class ResultResolver {
 	}
 
 	public ArrayList<String> resolveResults() {
-		// resolving the results
 		ArrayList<String> tempResults = new ArrayList<>();
 		for (ResultFile result : results) {
 			String fileName = new File(result.filePath).getName();

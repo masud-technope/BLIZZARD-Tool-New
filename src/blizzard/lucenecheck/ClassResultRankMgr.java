@@ -22,28 +22,25 @@ public class ClassResultRankMgr {
 		if (keyMap.isEmpty()) {
 			// load only the HashMap is empty
 			loadKeys();
-			// System.out.println("Keys loaded." + repoName);
 		}
 	}
 
 	public void loadKeys() {
-		// loading file name keys
 		ArrayList<String> lines = ContentLoader.getAllLinesOptList(this.keyfile);
 		for (String line : lines) {
 			String[] parts = line.split(":");
 			String key = parts[0] + ".java";
+			/* important insight - each line contains two : in windows file path. Be careful*/
 			keyMap.put(key, parts[2].trim()); // startled me
 		}
 	}
 
 	protected ArrayList<String> translateResults() {
-		// translating the results
 		ArrayList<String> translated = new ArrayList<>();
 		for (String fileURL : results) {
 			String key = new File(fileURL).getName();
 			if (keyMap.containsKey(key)) {
 				String orgFileName = keyMap.get(key);
-				// replacing back slashes
 				orgFileName = orgFileName.replace('\\', '/');
 				translated.add(orgFileName);
 			}
@@ -57,7 +54,6 @@ public class ClassResultRankMgr {
 			String key = new File(fileURL).getName();
 			if (keyMap.containsKey(key)) {
 				String orgFileName = keyMap.get(key);
-				// replacing back slashes
 				orgFileName = orgFileName.replace('\\', '/');
 				translated.add(orgFileName);
 				if (translated.size() == TOPK)
@@ -86,7 +82,6 @@ public class ClassResultRankMgr {
 			index++;
 			for (String item : goldset) {
 				if (elem.endsWith(item)) {
-					// found = true;
 					foundIndex = index;
 					break outer;
 				}
@@ -103,7 +98,6 @@ public class ClassResultRankMgr {
 			index++;
 			for (String item : goldset) {
 				if (elem.endsWith(item)) {
-					// found = true;
 					foundIndex = index;
 					break outer;
 				}
@@ -120,9 +114,7 @@ public class ClassResultRankMgr {
 			index++;
 			for (String item : goldset) {
 				if (elem.endsWith(item)) {
-					// found = true;
 					foundIndices.add(index);
-					// break;
 				}
 			}
 		}
@@ -139,9 +131,7 @@ public class ClassResultRankMgr {
 			index++;
 			for (String item : cgoldset) {
 				if (elem.endsWith(item)) {
-					// found = true;
 					foundIndices.add(index);
-					// break;
 				}
 			}
 		}
